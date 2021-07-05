@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,9 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
+
 <body>
 
     <div id="profile-page">
@@ -24,28 +26,31 @@
         </div>
 
         <div class="new-post">
-            <textarea placeholder="A cosa stai pensando?"></textarea>
-            <button class="send">CREA</button>
+            <textarea placeholder="A cosa stai pensando?" v-model="myWords" @keyup.enter="newPost"></textarea>
+            <button class="send" @click="newPost">Pubblica</button>
         </div>
 
         <div class="post-list">
 
-            <div v-for = 'post in myProfile.posts' class="post">
+            <div v-for='post in myProfile.posts' class="post">
                 <div class="post-details">
-                    <div class="user-pic">
-                        <img :src="myProfile.details.pic" alt="user pic">
+                    <div class="profile">
+                        <div class="user-pic">
+                            <img :src="myProfile.details.pic" alt="user pic">
+                        </div>
+                        <div class="details">
+                            <div class="user-name">{{myProfile.details.name}} {{myProfile.details.surname}}</div>
+                            <div class="post-date">{{post.date}}</div>
+                        </div>
                     </div>
-                    <div class="details">
-                        <div class="user-name">{{myProfile.details.name}} {{myProfile.details.surname}}</div>
-                        <div class="post-date">{{post.date}}</div>
-                    </div>
-                </div> 
+                    <div class="delete-post"><i class="fas fa-times x-button" @click="deletePost(index)"></i></div>
+                </div>
                 <div class="post-text">
                     {{post.text}}
                 </div>
 
-                <!-- if? -->
-                <div v-if = "Object.keys(post).includes('mediaPath')" class="post-media">
+
+                <div v-if="Object.keys(post).includes('mediaPath')" class="post-media">
                     <img :src='post.mediaPath' alt="media" />
                 </div>
 
@@ -56,4 +61,5 @@
     </div>
     <script src="./js/script-vue.js"></script>
 </body>
+
 </html>
