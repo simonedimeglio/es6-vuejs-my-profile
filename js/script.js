@@ -38,23 +38,29 @@ userDetailHtml.innerHTML = `
 
 var postListHtml = document.querySelector(".post-list")
 
+
 data.myProfile.posts.forEach((post) => {
 
     // prepariamo la parte interna dell'elemento html .post
     let postHtml = `
     <div class="post-details"> 
-        <div class="user-pic">
-            <img src="${data.myProfile.details.pic}" alt="user pic">
+
+        <div class="profile">
+            <div class="user-pic">
+                <img src="${data.myProfile.details.pic}" alt="user pic">
+            </div>
+            <div class="details">
+                <div class="user-name">${data.myProfile.details.name} ${data.myProfile.details.surname}</div>
+                <div class="post-date">${post.date}</div>
+            </div>
         </div>
-        <div class="details">
-            <div class="user-name">${data.myProfile.details.name} ${data.myProfile.details.surname}</div>
-            <div class="post-date">${post.date}</div>
-        </div>
+       
+        <div class="delete-post"><i class="fas fa-times"></i></div>
     </div> 
     <div class="post-text">
         ${post.text}
     </div>
-` 
+`;
     // solo se l'immagine esiste aggiungere a postHtml l'html del media
     // mediaPath è una chiave che "a volte" esiste. <= verifichiamo che esista.
     // usiamo Object.keys(post) per ottenere tutte le chiavi di un oggetto => è una lista/array
@@ -69,4 +75,50 @@ data.myProfile.posts.forEach((post) => {
     // e il tutto dentro postListHtml.innerHtml.
 
     postListHtml.innerHTML += `<div class="post"> ${postHtml} </div>`
-}) 
+});
+
+
+/*
+CREAZIONE DI UN NUOVO POST
+Con un click su “Pubblica” viene pushato un nuovo post nell’array posts, 
+con il testo della textarea.
+*/
+
+document.querySelector('.send').addEventListener('click', ()=> {
+
+    let input = document.getElementById("text-post");
+    if (input.value === '') {
+        alert("Per pubblicare un post, devi scrivere qualcosa all'interno della text area!");
+    } else {
+        data.myProfile.posts.push( 
+            {
+                text: input.value,
+                date: '05/07/2021'
+            });
+            postListHtml.innerHTML += `
+            <div class="post">
+                <div class="post-details"> 
+                
+                    <div class="profile">
+                        <div class="user-pic">
+                            <img src="${data.myProfile.details.pic}" alt="user pic">
+                        </div>
+                        <div class="details">
+                            <div class="user-name">${data.myProfile.details.name} ${data.myProfile.details.surname}</div>
+                            <div class="post-date">${data.myProfile.posts[data.myProfile.posts.length - 1].date}</div>
+                        </div>
+                    </div>
+                
+                    <div class="delete-post"><i class="fas fa-times"></i></div>
+        
+                </div> 
+                <div class="post-text">
+                    ${input.value}
+                </div>
+            </div>
+            `
+            input.value = ''; // azzero nuovamente la text-area
+    };
+    
+});
+
