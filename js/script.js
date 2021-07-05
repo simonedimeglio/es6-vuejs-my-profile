@@ -55,7 +55,7 @@ data.myProfile.posts.forEach((post) => {
             </div>
         </div>
        
-        <div class="delete-post"><i class="fas fa-times"></i></div>
+        <div class="delete-post"><i class="fas fa-times x-button"></i></div>
     </div> 
     <div class="post-text">
         ${post.text}
@@ -109,7 +109,7 @@ document.querySelector('.send').addEventListener('click', ()=> {
                         </div>
                     </div>
                 
-                    <div class="delete-post"><i class="fas fa-times"></i></div>
+                    <div class="delete-post"><i class="fas fa-times x-button"></i></div>
         
                 </div> 
                 <div class="post-text">
@@ -122,3 +122,19 @@ document.querySelector('.send').addEventListener('click', ()=> {
     
 });
 
+/*
+Bonus: Cancellazione del post.
+Aggiungere un icona ad ogni post, che se cliccata cancella il post relativo.
+*/
+
+// icona già aggiunta precedentemente.
+document.querySelector(".x-button").addEventListener('click', ()=> {
+
+    console.log('XBUTTON');
+});
+
+
+// function remove(array, element) {
+//     const index = array.indexOf(element);
+//     array.splice(index, 1);
+//   };
